@@ -55,7 +55,7 @@ git commit -m "Your commit message"
 3. Push your changes to your forked repository:
 
 ```bash
-git push origin your-branch-name
+git push 
 ```
 
 ## Creating a Pull Request

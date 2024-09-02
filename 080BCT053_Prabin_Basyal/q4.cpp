@@ -8,7 +8,6 @@ class BankAccount
 protected:
     int acctNumber;
     float acctBalance;
-
 public:
     BankAccount(int num = 0, float bal = 0.0) : acctNumber(num), acctBalance(bal) {}
 

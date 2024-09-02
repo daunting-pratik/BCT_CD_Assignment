@@ -1,129 +1,65 @@
 #include <iostream>
-#include <string>
-
+#include <cstring>
 using namespace std;
 
-class BankAccount
-{
-protected:
-    int acctNumber;
-    float acctBalance;
+class Student {
+    char name[30];
+    int dob; 
 
 public:
-    BankAccount(int num = 0, float bal = 0.0) : acctNumber(num), acctBalance(bal) {}
-
-    virtual void addFunds() = 0;
-    virtual void removeFunds() = 0;
-
-    void inputAccountData()
-    {
-        cout << "Enter the account number: ";
-        cin >> acctNumber;
-        cout << "Enter the initial balance: ";
-        cin >> acctBalance;
+    
+    Student() {
+        strcpy(name, "");
+        dob = 0;
     }
 
-    void showDetails(const string &acctType)
-    {
-        cout << "Account Type: " << acctType << endl;
-        cout << "Account Number: " << acctNumber << endl;
-        cout << "Current Balance: " << acctBalance << endl;
+    
+    Student( char* nam, int doo) {
+        strcpy(name, nam);
+        dob = doo;
     }
 
-    virtual ~BankAccount() {}
-};
 
-class SavingsAccount : public BankAccount
-{
-public:
-    SavingsAccount(int num = 0, float bal = 0.0) : BankAccount(num, bal) {}
-
-    void addFunds() override
-    {
-        float depositAmount;
-        cout << "Enter the amount to deposit: ";
-        cin >> depositAmount;
-        acctBalance += depositAmount;
-        cout << "Deposit successful\n";
+    void getdata() {
+        cout << "Enter Name: ";
+        cin >> name;
+        cout << "Enter DOB (YYYYMMDD): ";
+        cin >> dob;
     }
 
-    void removeFunds() override
-    {
-        float withdrawalAmount;
-        cout << "Enter the amount to withdraw: ";
-        cin >> withdrawalAmount;
-        if (acctBalance - withdrawalAmount >= 0)
-        {
-            acctBalance -= withdrawalAmount;
-            cout << "Withdrawal successful\n";
-        }
-        else
-        {
-            cout << "Insufficient funds\n";
-        }
+    
+    int getDob()  {
+        return dob;
+    }
+
+
+     char* getName()  {
+        return name;
     }
 };
 
-class CheckingAccount : public BankAccount
-{
-public:
-    CheckingAccount(int num = 0, float bal = 0.0) : BankAccount(num, bal) {}
+int main() {
+    Student a[100];
+    int n;
 
-    void addFunds() override
-    {
-        float depositAmount;
-        cout << "Enter the amount to deposit: ";
-        cin >> depositAmount;
-        acctBalance += depositAmount;
-        cout << "Deposit successful\n";
+    cout << "Enter number of persons: ";
+    cin >> n;
+
+    
+    for (int i = 0; i < n; i++) {
+        a[i].getdata();
     }
 
-    void removeFunds() override
-    {
-        float withdrawalAmount;
-        cout << "Enter the amount to withdraw: ";
-        cin >> withdrawalAmount;
-        if (acctBalance - withdrawalAmount >= 0)
-        {
-            acctBalance -= withdrawalAmount;
-            cout << "Withdrawal successful\n";
-        }
-        else
-        {
-            cout << "Insufficient funds\n";
+    int searchDOB;
+    cout << "Enter DOB to search (YYYYMMDD): ";
+    cin >> searchDOB;
+
+    cout << "Persons with DOB " << searchDOB << " are:" << endl;
+    for (int i = 0; i < n; i++) {
+        if (a[i].getDob() == searchDOB) {
+            cout << a[i].getName() << endl;
         }
     }
-};
 
-int main()
-{
-    BankAccount *accountPtr = nullptr;
-    int acctChoice;
-
-    cout << "1. Savings Account\n2. Checking Account\nEnter your choice: ";
-    cin >> acctChoice;
-
-    switch (acctChoice)
-    {
-    case 1:
-        accountPtr = new SavingsAccount();
-        accountPtr->inputAccountData();
-        accountPtr->addFunds();
-        accountPtr->removeFunds();
-        accountPtr->showDetails("Savings Account");
-        break;
-    case 2:
-        accountPtr = new CheckingAccount();
-        accountPtr->inputAccountData();
-        accountPtr->addFunds();
-        accountPtr->removeFunds();
-        accountPtr->showDetails("Checking Account");
-        break;
-    default:
-        cout << "Invalid choice\n";
-        break;
-    }
-
-    delete accountPtr; // Clean up allocated memory
     return 0;
 }

@@ -1,0 +1,219 @@
+#include <iostream>
+using namespace std;
+
+class Person {
+    string name;
+    string dateOfBirth;
+
+public:
+    Person(string n, string dob) {
+        name = n;
+        dateOfBirth = dob;
+    }
+
+    string getName() {
+        return name;
+    }
+
+    string getDateOfBirth() {
+        return dateOfBirth;
+    }
+};
+
+int main() {
+    Person persons[3] = {
+        Person("Alice", "01-01-1990"),
+        Person("Bob", "02-02-1995"),
+        Person("Charlie", "01-01-1990")
+    };
+
+    string dobToFind;
+    cout << "Enter Date of Birth (DD-MM-YYYY) to search: ";
+    cin >> dobToFind;
+
+    for (int i = 0; i < 3; i++) {
+        if (persons[i].getDateOfBirth() == dobToFind) {
+            cout << "Name: " << persons[i].getName() << endl;
+        }
+    }
+
+    return 0;
+}
+
+
+
+//assignment no 2
+  #include <iostream>
+using namespace std;
+
+class Employee {
+    int id;
+    string name;
+    float salary;
+
+public:
+    Employee(int i, string n, float s) {
+        id = i;
+        name = n;
+        salary = s;
+    }
+
+    float getSalary() {
+        return salary;
+    }
+
+    void display() {
+        cout << "ID: " << id << ", Name: " << name << ", Salary: " << salary << endl;
+    }
+};
+
+int main() {
+    Employee employees[3] = {
+        Employee(1, "John", 5000),
+        Employee(2, "Doe", 7000),
+        Employee(3, "Jane", 3000)
+    };
+
+    float salaryThreshold;
+    cout << "Enter minimum salary to filter: ";
+    cin >> salaryThreshold;
+
+    for (int i = 0; i < 3; i++) {
+        if (employees[i].getSalary() > salaryThreshold) {
+            employees[i].display();
+        }
+    }
+
+    return 0;
+}
+
+
+//assignment no 3
+#include <iostream>
+using namespace std;
+
+class Library {
+    string bookTitle;
+    string author;
+    int numberOfCopies;
+
+public:
+    Library(string bt, string au, int nc) {
+        bookTitle = bt;
+        author = au;
+        numberOfCopies = nc;
+    }
+
+    void addCopies(int n) {
+        numberOfCopies += n;
+    }
+
+    void issueBook() {
+        if (numberOfCopies > 0) {
+            numberOfCopies--;
+        }
+    }
+
+    void returnBook() {
+        numberOfCopies++;
+    }
+
+    void displayBook() {
+        cout << "Title: " << bookTitle << ", Author: " << author << ", Copies: " << numberOfCopies << endl;
+    }
+};
+
+int main() {
+    Library lib("C++ Programming", "Bjarne Stroustrup", 10);
+
+    lib.displayBook();
+    lib.issueBook();
+    lib.displayBook();
+    lib.returnBook();
+    lib.displayBook();
+
+    return 0;
+}
+
+//assignmentno 4
+#include <iostream>
+using namespace std;
+
+class Account {
+protected:
+    int accountNumber;
+    double balance;
+    //pratik
+
+public:
+    Account(int accNum, double bal) {
+        accountNumber = accNum;
+        balance = bal;
+    }
+
+    virtual void deposit(double amount) = 0;
+    virtual void withdraw(double amount) = 0;
+    virtual void display() = 0;
+};
+
+class SavingsAccount : public Account {
+public:
+    SavingsAccount(int accNum, double bal) : Account(accNum, bal) {}
+
+    void deposit(double amount) {
+        balance += amount;
+        cout << "Savings Account: Deposited " << amount << ", New Balance: " << balance << endl;
+    }
+
+    void withdraw(double amount) {
+        if (balance >= amount) {
+            balance -= amount;
+            cout << "Savings Account: Withdrawn " << amount << ", New Balance: " << balance << endl;
+        } else {
+            cout << "Savings Account: Insufficient balance!" << endl;
+        }
+    }
+
+    void display() {
+        cout << "Savings Account: " << accountNumber << ", Balance: " << balance << endl;
+    }
+};
+
+class CheckingAccount : public Account {
+public:
+    CheckingAccount(int accNum, double bal) : Account(accNum, bal) {}
+
+    void deposit(double amount) {
+        balance += amount;
+        cout << "Checking Account: Deposited " << amount << ", New Balance: " << balance << endl;
+    }
+
+    void withdraw(double amount) {
+        if (balance >= amount + 1) {
+            balance -= (amount + 1);
+            cout << "Checking Account: Withdrawn " << amount << " (including $1 fee), New Balance: " << balance << endl;
+        } else {
+            cout << "Checking Account: Insufficient balance!" << endl;
+        }
+    }
+
+    void display() {
+        cout << "Checking Account: " << accountNumber << ", Balance: " << balance << endl;
+    }
+};
+
+int main() {
+    SavingsAccount sa(101, 500);
+    CheckingAccount ca(102, 1000);
+
+    sa.deposit(100);
+    sa.withdraw(50);
+    sa.display();
+
+    ca.deposit(200);
+    ca.withdraw(150);
+    ca.display();
+
+    return 0;
+}
+
